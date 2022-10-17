@@ -1,4 +1,6 @@
 import express from 'express';
+import connectDB from "./database/connection";
+connectDB
 
 const app = express();
 app.use(express.json());
