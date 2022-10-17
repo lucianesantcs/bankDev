@@ -4,7 +4,8 @@ import { createUser1666028758103 } from "./migrations/1666028758103-create_user"
 const connectDB =  new DataSource({
     type: "sqlite",
     database: "./src/database/database.sqlite",
-    migrations: [createUser1666028758103]
+    migrations: [createUser1666028758103],
+    entities: ["./src/models/*.ts"]
 });
 
 connectDB
