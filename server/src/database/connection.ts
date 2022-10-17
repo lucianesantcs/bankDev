@@ -2,7 +2,8 @@ import { DataSource } from "typeorm";
 
 const connectDB =  new DataSource({
     type: "sqlite",
-    database: "./src/database/database.sqlite"
+    database: "./src/database/database.sqlite",
+    migrations: ["./database/migrations/*.ts"]
 })
 
 connectDB
