@@ -1,10 +1,11 @@
 import { DataSource } from "typeorm";
+import { createUser1666028758103 } from "./migrations/1666028758103-create_user";
 
 const connectDB =  new DataSource({
     type: "sqlite",
     database: "./src/database/database.sqlite",
-    migrations: ["./database/migrations/*.ts"]
-})
+    migrations: [createUser1666028758103]
+});
 
 connectDB
     .initialize()
