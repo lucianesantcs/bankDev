@@ -10,6 +10,23 @@ export default {
     return response.json(users);
   },
 
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const { name, username, password, email, birthdate } = request.body;
+    const usersRepository = connectDB.getRepository(Users);
+
+    await usersRepository
+      .createQueryBuilder()
+      .update(Users)
+      .set({ name, username, password, email, birthdate })
+      .where("id = :id", { id })
+      .execute();
+
+    return response.status(202).json({
+      message: "User updated with success",
+    });
+  },
+
   async create(request: Request, response: Response) {
     const { name, username, password, email, birthdate } = request.body;
     const usersRepository = connectDB.getRepository(Users);
