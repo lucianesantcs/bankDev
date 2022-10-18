@@ -42,4 +42,20 @@ export default {
 
     return response.status(201).json(user);
   },
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+    const usersRepository = connectDB.getRepository(Users);
+
+    await usersRepository
+      .createQueryBuilder()
+      .delete()
+      .from(Users)
+      .where("id = :id", { id })
+      .execute();
+
+    return response.status(202).json({
+      message: "User deleted with success",
+    });
+  },
 };
