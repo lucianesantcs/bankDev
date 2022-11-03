@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, SafeAreaView, Text, TextInput, View } from 'react-native';
+import { Pressable, SafeAreaView, Text, TextInput } from 'react-native';
 import styles from './style';
 
 const Login = ({ navigation }) => {
@@ -32,6 +32,10 @@ const Login = ({ navigation }) => {
       {/* <Pressable style={styles.button} onPress={handleSubmit}> */}
       <Pressable style={styles.button} onPress={() => navigation.navigate('Home')}>
         <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
+
+      <Pressable style={styles.buttonLink} onPress={() => navigation.navigate('SignUp')}>
+        <Text style={styles.buttonTextLink}>Crie sua conta</Text>
       </Pressable>
 
       <Pressable style={styles.buttonLink}>
