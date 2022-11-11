@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, SafeAreaView, Text, TextInput } from "react-native";
+import api from "../../services/api";
 import styles from "./style";
 
 const Login = ({ navigation }) => {
@@ -9,55 +10,63 @@ const Login = ({ navigation }) => {
   const [senha, setSenha] = useState("");
   const [nascimento, setNascimento] = useState("");
 
-  // const handleSubmit = () => {
-  //   let userData = {
-  //     email,
-  //     senha
-  //   }
-  // }
+  const handleSubmit = async () => {
+    console.log(nome, email, username, senha, nascimento);
+
+    const data = JSON.stringify({
+      name: nome,
+      email: email,
+      username: username,
+      password: senha,
+      birthdate: nascimento,
+    });
+
+    await api.post("users", data, {
+      headers: { "Content-Type": "application/json" },
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
         value={nome}
-        onChangeText={(text) => setNome(text)}
+        onChangeText={setNome}
         placeholder="Digite seu nome completo"
         style={styles.input}
       />
 
       <TextInput
         value={email}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={setEmail}
         placeholder="Digite seu e-mail"
         style={styles.input}
+        keyboardType="email-address"
       />
 
       <TextInput
         value={username}
-        onChangeText={(text) => setUsername(text)}
+        onChangeText={setUsername}
         placeholder="Crie um username"
         style={styles.input}
       />
 
       <TextInput
         value={senha}
-        onChangeText={(text) => setSenha(text)}
+        onChangeText={setSenha}
+        secureTextEntry
         placeholder="Crie uma senha"
         style={styles.input}
+        keyboardType="visible-password"
       />
 
       <TextInput
         value={nascimento}
-        onChangeText={(text) => setNascimento(text)}
-        placeholder="Data de nascimento"
+        onChangeText={setNascimento}
+        placeholder="Data de nascimento DD/MM/AAAA"
         style={styles.input}
       />
 
-      {/* <Pressable style={styles.button} onPress={handleSubmit}> */}
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("Login")}
-      >
+      <Pressable style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Cadastro</Text>
       </Pressable>
       <Pressable
