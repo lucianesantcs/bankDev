@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
 import styles from "./style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import api from "../../services/api";
 
 import { useTogglePasswordVisibility } from "../../hooks/useTogglePasswordVisibility";
 
@@ -11,12 +12,29 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  // const handleSubmit = () => {
-  //   let userData = {
-  //     email,
-  //     senha
-  //   }
-  // }
+  const handleSubmit = async () => {
+    let userData = {
+      email,
+      senha,
+    };
+
+    const { data } = await api.get("users", {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    data.forEach((apiData: any) => {
+      if (
+        apiData.email === userData.email &&
+        apiData.password === userData.senha
+      ) {
+        navigation.navigate("Home");
+      } else {
+        // adicionar validação de erro
+      }
+
+      console.log("apiData", apiData);
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,11 +58,7 @@ const Login = ({ navigation }) => {
         </Pressable>
       </View>
 
-      {/* <Pressable style={styles.button} onPress={handleSubmit}> */}
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("Home")}
-      >
+      <Pressable style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
 
