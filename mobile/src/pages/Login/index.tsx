@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
 import styles from "./style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -11,6 +11,8 @@ const Login = ({ navigation }) => {
     useTogglePasswordVisibility();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [remainingAttempts, setRemainingAttempts] = useState(3);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async () => {
     let userData = {
@@ -22,17 +24,26 @@ const Login = ({ navigation }) => {
       headers: { "Content-Type": "application/json" },
     });
 
-    data.forEach((apiData: any) => {
+    await data.forEach((apiData: any) => {
       if (
         apiData.email === userData.email &&
         apiData.password === userData.senha
       ) {
         navigation.navigate("Home");
-      } else {
-        // adicionar validação de erro
+      } else if (userData.email === "" || userData.senha === "") {
+        setErrorMessage("Os campos não podem ser vazios.");
+      } else if (apiData.password !== userData.senha) {
+        setRemainingAttempts(remainingAttempts - 1);
+        if (remainingAttempts <= 3 && remainingAttempts > 0) {
+          setErrorMessage(
+            `Senha incorreta, tentativas restantes: ${remainingAttempts}`
+          );
+          setRemainingAttempts(remainingAttempts - 1);
+          console.log("entativasa");
+        } else if (remainingAttempts == 0) {
+          setErrorMessage("Número de tentativas excedidas, usuário bloqueado.");
+        }
       }
-
-      console.log("apiData", apiData);
     });
   };
 
@@ -57,7 +68,7 @@ const Login = ({ navigation }) => {
           <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
         </Pressable>
       </View>
-
+      <Text style={styles.errorMessage}>{errorMessage && errorMessage}</Text>
       <Pressable style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>

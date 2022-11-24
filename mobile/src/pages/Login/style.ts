@@ -69,6 +69,14 @@ const styles = StyleSheet.create({
     color: "#4e97e5",
     fontSize: 16,
   },
+
+  errorMessage: {
+    alignSelf: "flex-start",
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 10,
+    marginTop: 10
+  }
 });
 
 export default styles;
