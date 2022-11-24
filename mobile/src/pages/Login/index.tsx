@@ -39,7 +39,6 @@ const Login = ({ navigation }) => {
             `Senha incorreta, tentativas restantes: ${remainingAttempts}`
           );
           setRemainingAttempts(remainingAttempts - 1);
-          console.log("entativasa");
         } else if (remainingAttempts == 0) {
           setErrorMessage("Número de tentativas excedidas, usuário bloqueado.");
         }
@@ -69,8 +68,8 @@ const Login = ({ navigation }) => {
         </Pressable>
       </View>
       <Text style={styles.errorMessage}>{errorMessage && errorMessage}</Text>
-      <Pressable style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Login</Text>
+      <Pressable style={remainingAttempts < 0 ? [styles.button, styles.buttonDisabled] : styles.button} onPress={handleSubmit} disabled={remainingAttempts < 0}>
+        <Text style={remainingAttempts < 0 ? [styles.buttonText, styles.buttonTextDisabled] : styles.buttonText }>Login</Text>
       </Pressable>
 
       <Pressable

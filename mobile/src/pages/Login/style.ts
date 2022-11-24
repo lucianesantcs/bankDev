@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     width: "90%",
   },
 
+  buttonDisabled: {
+    backgroundColor: "grey",
+  },
+
   button: {
     width: "100%",
     paddingVertical: 16,
@@ -57,6 +61,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
 
+  buttonTextDisabled: {
+    color: "black",
+  },
+
   buttonLink: {
     width: "100%",
     alignItems: "flex-end",
@@ -72,11 +80,11 @@ const styles = StyleSheet.create({
 
   errorMessage: {
     alignSelf: "flex-start",
-    color: 'red',
+    color: "red",
     fontSize: 12,
     marginBottom: 10,
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 });
 
 export default styles;
